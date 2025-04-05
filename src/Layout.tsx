@@ -1,5 +1,5 @@
 import { Navigate } from "react-router-dom";
-import Sidebar from "@/components/Sidebar";
+import Sidebar from "@/components/sidebar";
 import Header from "@/components/Header";
 import Dashboard from "@/pages/Dashboard";
 import { useCurrentUserStore } from "./modules/auth/current-user.state";
