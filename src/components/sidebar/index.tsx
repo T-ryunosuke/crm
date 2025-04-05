@@ -6,10 +6,15 @@ import { authRepository } from "@/modules/auth/auth.repository";
 const Sidebar = () => {
   const currentUserStore = useCurrentUserStore();
 
-  const signout = async () => {
+const signout = async () => {
+  try {
     await authRepository.signout();
+  } catch (err) {
+    console.error("ログアウトエラー", err);
+  } finally {
     currentUserStore.set(undefined);
-  };
+  }
+};
 
   return (
     <div className="hidden sm:block w-56 bg-gray-800 text-white h-screen fixed top-14 pt-4">
