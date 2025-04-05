@@ -1,13 +1,21 @@
 import { Link } from "react-router-dom";
 import UserItem from "./UserItem";
 import { useCurrentUserStore } from "@/modules/auth/current-user.state";
+import { authRepository } from "@/modules/auth/auth.repository";
 
 const Sidebar = () => {
   const currentUserStore = useCurrentUserStore();
 
+  const signout = async () => {
+    await authRepository.signout();
+    currentUserStore.set(undefined);
+  };
+
   return (
     <div className="hidden sm:block w-56 bg-gray-800 text-white h-screen fixed top-14 pt-4">
-      <UserItem user={currentUserStore.currentUser!} />
+      <UserItem
+        user={currentUserStore.currentUser!}
+      />
       <div className="pl-2 pb-2 text-sm">メニュー</div>
       <ul>
         <li>
@@ -27,12 +35,12 @@ const Sidebar = () => {
           </Link>
         </li>
         <li>
-          <Link
-            to="/signin"
-            className="block px-5 py-3 font-mono text-lg hover:bg-gray-700"
+          <button
+            onClick={signout}
+            className="w-full text-left block px-5 py-3 font-mono text-lg hover:bg-gray-700"
           >
             ログアウト
-          </Link>
+          </button>
         </li>
       </ul>
     </div>
