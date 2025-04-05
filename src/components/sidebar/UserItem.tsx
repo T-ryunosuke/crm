@@ -10,7 +10,7 @@ type Props = {
 const UserItem: FC<Props> = ({ user }) => {
   return (
     <Card className="bg-gray-700 border-none text-white mx-2 mb-4">
-      <CardContent className="px-3 pt-1 pb-2.5 flex items-center gap-2">
+      <CardContent className="px-3 pt-1 pb-2.5 flex items-center gap-1">
 
         {/* アイコン画像 */}
         <Avatar className="w-12 h-12 mt-1">
@@ -22,10 +22,10 @@ const UserItem: FC<Props> = ({ user }) => {
 
         {/* 名前とメール */}
         <div>
-          <div className="text-lg font-semibold tracking-wider">
+          <div className="text-md tracking-wider">
             {user.user_metadata.name}
           </div>
-          <div className="text-sm text-gray-300">
+          <div className="text-xs font-thin text-gray-300">
             {user.email}
           </div>
         </div>
