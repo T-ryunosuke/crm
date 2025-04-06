@@ -33,7 +33,7 @@ const signout = async () => {
         </li>
         <li>
           <Link
-            to="/"
+            to="/create"
             className="block px-5 py-3 font-mono text-lg tracking-widest hover:bg-gray-700"
           >
             顧客登録

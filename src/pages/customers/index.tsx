@@ -3,11 +3,11 @@ import { customers } from "@/data/customers";
 import { useSearch } from "@/hooks/useSearch";
 import { Customer } from "@/types/customer";
 import { sortCustomers } from "@/lib/sortCustomers";
-import SearchBox from "@/components/dashbord/SearchBox";
-import SortButtons from "@/components/dashbord/SortButtons";
-import CustomerList from "@/components/dashbord/CustomerList";
+import SearchBox from "@/components/customers/CustomerList/SearchBox";
+import SortButtons from "@/components/customers/CustomerList/SortButtons";
+import CustomerList from "@/components/customers/CustomerList";
 
-const Dashboard = () => {
+const Customers = () => {
   const [sortOrder, setSortOrder] = useState<"name" | "registeredAt">("name");
 
   // 検索クエリとフィルタリング
@@ -35,4 +35,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default Customers;
