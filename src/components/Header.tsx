@@ -23,7 +23,7 @@ const Header = () => {
           </Link>
 
           {/* 顧客登録ボタン */}
-          <Link to="/">
+          <Link to="/create">
             <button className="pl-2 pr-3 py-1 bg-cyan-500 text-sm text-white rounded hover:bg-cyan-600">
               ＋顧客登録
             </button>
