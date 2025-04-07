@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { Customer } from "@/types/customer";
+import { CustomerTypes } from "@/types/customer";
 
-export const useSearch = (data: Customer[], queryKey: keyof Customer) => {
+export const useSearch = (data: CustomerTypes[], queryKey: "name" | "company") => {
   const [searchQuery, setSearchQuery] = useState<string>("");
 
   // 検索結果を取得
