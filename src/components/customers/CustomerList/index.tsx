@@ -1,8 +1,16 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Customer } from "@/types/customer";
+import { CustomerTypes } from "@/types/customer";
+
+const formatDate = (date: string): string => {
+  return new Date(date).toLocaleDateString("ja-JP", {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  });
+};
 
 interface CustomerListProps {
-  customers: Customer[];
+  customers: CustomerTypes[];
 }
 
 const CustomerList: React.FC<CustomerListProps> = ({ customers }) => {
@@ -18,7 +26,7 @@ const CustomerList: React.FC<CustomerListProps> = ({ customers }) => {
             <div className="text-sm text-gray-700">
               <p><strong>メールアドレス:</strong> {customer.email}</p>
               <p><strong>電話番号:</strong> {customer.phone}</p>
-              <p><strong>登録日:</strong> {customer.registeredAt}</p>
+              <p><strong>登録日:</strong> {formatDate(customer.created_at!)}</p>
             </div>
           </CardContent>
         </Card>

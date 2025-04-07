@@ -1,14 +1,14 @@
-import { Customer } from "@/types/customer";
+import { CustomerTypes } from "@/types/customer";
 
 export const sortCustomers = (
-  customers: Customer[],
-  sortOrder: "name" | "registeredAt"
-): Customer[] => {
+  customers: CustomerTypes[],
+  sortOrder: "name" | "created_at"
+): CustomerTypes[] => {
   return [...customers].sort((a, b) => {
     if (sortOrder === "name") {
       return a.furigana.localeCompare(b.furigana, "ja", { sensitivity: "base" });
     } else {
-      return new Date(b.registeredAt).getTime() - new Date(a.registeredAt).getTime();
+      return new Date(b.created_at!).getTime() - new Date(a.created_at!).getTime();
     }
   });
 };

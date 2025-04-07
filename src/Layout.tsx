@@ -1,6 +1,6 @@
 import { Navigate, Outlet } from "react-router-dom";
 import Sidebar from "@/components/sidebar";
-import Header from "@/components/Header";
+import Header from "@/components/header";
 import { useCurrentUserStore } from "./modules/auth/current-user.state";
 
 

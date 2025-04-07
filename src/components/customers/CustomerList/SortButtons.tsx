@@ -1,8 +1,8 @@
 import React from "react";
 
 interface SortButtonsProps {
-  sortOrder: "name" | "registeredAt";
-  setSortOrder: (order: "name" | "registeredAt") => void;
+  sortOrder: "name" | "created_at";
+  setSortOrder: (order: "name" | "created_at") => void;
 }
 
 const SortButtons: React.FC<SortButtonsProps> = ({ sortOrder, setSortOrder }) => {
@@ -15,8 +15,8 @@ const SortButtons: React.FC<SortButtonsProps> = ({ sortOrder, setSortOrder }) =>
         顧客名順
       </button>
       <button
-        className={`p-2 ${sortOrder === "registeredAt" ? "bg-blue-700" : "bg-blue-500"} text-white text-xs rounded`}
-        onClick={() => setSortOrder("registeredAt")}
+        className={`p-2 ${sortOrder === "created_at" ? "bg-blue-700" : "bg-blue-500"} text-white text-xs rounded`}
+        onClick={() => setSortOrder("created_at")}
       >
         登録日順
       </button>
