@@ -1,8 +1,8 @@
-export type Customer = {
+export type CustomerTypes = {
   company: string;
   name: string;
   furigana: string;
-  email: string;
-  phone: string;
-  registeredAt: string;
+  email: string | null;
+  phone: string | null;
+  created_at?: string;
 };

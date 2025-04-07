@@ -1,36 +1,44 @@
-import { useState } from "react";
-import { customers } from "@/data/customers";
+import { useEffect, useState } from "react";
 import { useSearch } from "@/hooks/useSearch";
-import { Customer } from "@/types/customer";
 import { sortCustomers } from "@/lib/sortCustomers";
 import SearchBox from "@/components/customers/CustomerList/SearchBox";
 import SortButtons from "@/components/customers/CustomerList/SortButtons";
 import CustomerList from "@/components/customers/CustomerList";
+import { customerRepository } from "@/modules/customers/customer.repository";
+import { Customer } from "@/modules/customers/customer.entity";
+// ★ Supabaseから取得する関数をimport
 
 const Customers = () => {
-  const [sortOrder, setSortOrder] = useState<"name" | "registeredAt">("name");
+  const [customers, setCustomers] = useState<Customer[]>([]);
+  const [sortOrder, setSortOrder] = useState<"name" | "created_at">("name");
 
-  // 検索クエリとフィルタリング
-  const { searchQuery, setSearchQuery, filteredData } = useSearch(customers as Customer[], "name");
+  // 顧客一覧の取得
+  useEffect(() => {
+    const fetchCustomers = async () => {
+      try {
+        const data = await customerRepository.getAll();
+        setCustomers(data); // ★ 取得データをセット
+      } catch (err) {
+        console.error("顧客データの取得に失敗しました", err);
+      }
+    };
 
-  // 並び替え処理
+    fetchCustomers();
+  }, []);
+
+  const { searchQuery, setSearchQuery, filteredData } = useSearch(customers, "name");
   const sortedCustomers = sortCustomers(filteredData, sortOrder);
 
   return (
     <main className="flex-1 min-h-screen bg-gray-100 p-6 pt-20 sm:pl-64 overflow-y-auto">
-      {/* 検索ボックス */}
       <SearchBox searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
-
-      {/* 並び替えボタン */}
       <SortButtons sortOrder={sortOrder} setSortOrder={setSortOrder} />
 
-      {/* 検索結果がない場合のメッセージ */}
-      {sortedCustomers.length === 0 && (
+      {sortedCustomers.length === 0 ? (
         <p className="text-center text-gray-500">該当する顧客が見つかりませんでした。</p>
+      ) : (
+        <CustomerList customers={sortedCustomers} />
       )}
-
-      {/* 顧客情報一覧 */}
-      <CustomerList customers={sortedCustomers} />
     </main>
   );
 };
