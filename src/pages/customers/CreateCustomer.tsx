@@ -26,7 +26,10 @@ const CreateCustomer = () => {
   };
 
   return (
-    <main className="flex-1 min-h-screen bg-gray-100 p-6 pt-20 sm:pl-64 overflow-y-auto">
+    <main
+      className="flex-1 h-screen bg-gray-100 p-6 pt-20 sm:pl-64 overflow-y-auto"
+      style={{ height: 'calc(var(--vh, 1vh) * 100)' }}
+    >
       <h2 className="mb-4 p-2 font-mono border-b-2 text-2xl font-semibold tracking-wider">顧客情報を入力して登録</h2>
       <form onSubmit={handleSubmit}>
         <div className="mb-4">

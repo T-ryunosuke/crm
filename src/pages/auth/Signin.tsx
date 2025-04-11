@@ -19,10 +19,13 @@ const Signin = () => {
   if (currentUserStore.currentUser != null) return <Navigate replace to="/" />;
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-100">
-      <Card className="w-full max-w-md p-6 shadow-lg">
+    <div
+      className="flex items-center justify-center bg-gray-100"
+      style={{ height: 'calc(var(--vh, 1vh) * 100)' }}
+    >
+      <Card className="w-full max-w-sm sm:max-w-md p-2 pt-3 sm:p-6 shadow-lg">
         <CardHeader>
-          <CardTitle className="text-center text-xl">顧客管理デモアプリ</CardTitle>
+          <CardTitle className="text-center font-mono pb-3 text-xl tracking-wider">顧客管理デモアプリ</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
