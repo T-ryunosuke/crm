@@ -1,23 +1,13 @@
 import { Link, useLocation } from "react-router-dom";
 import UserItem from "./UserItem";
 import { useCurrentUserStore } from "@/modules/auth/current-user.state";
-import { authRepository } from "@/modules/auth/auth.repository";
+import { useSignout } from "@/modules/auth/use-signout";
 
 const Sidebar = () => {
   const currentUserStore = useCurrentUserStore();
+  const { signout } = useSignout();
   // 現在のパスを取得
   const location = useLocation();
-
-  const signout = async () => {
-    try {
-      await authRepository.signout();
-    } catch (err) {
-      console.error("ログアウトエラー", err);
-    } finally {
-      currentUserStore.set(undefined);
-    }
-  };
-
   const isActive = (path: string) => location.pathname === path;
 
   return (
