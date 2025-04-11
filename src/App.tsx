@@ -13,14 +13,27 @@ function App() {
   const currentUserStore = useCurrentUserStore();
 
   useEffect(() => {
+    // iOS で安定したビューポート高さを得るための --vh 設定
+    const setVh = () => {
+      const vh = window.innerHeight * 0.01;
+      document.documentElement.style.setProperty('--vh', `${vh}px`);
+    };
+    setVh();
+    window.addEventListener('resize', setVh);
+
+    // セッション取得
     setSession();
-  }, [])
+
+    return () => {
+      window.removeEventListener('resize', setVh);
+    };
+  }, []);
 
   const setSession = async () => {
     const currentUser = await authRepository.getCurrentUser();
     currentUserStore.set(currentUser);
     setIsLoading(false);
-  }
+  };
 
   if (isLoading) return <div />;
 
