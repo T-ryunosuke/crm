@@ -1,6 +1,7 @@
 import React from "react";
 
 interface SortButtonsProps {
+  // リテラル型のユニオン型にして絞ることで予期しない値を防げる。
   sortOrder: "name" | "created_at";
   setSortOrder: (order: "name" | "created_at") => void;
 }

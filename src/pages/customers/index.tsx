@@ -9,15 +9,18 @@ import { Customer } from "@/modules/customers/customer.entity";
 // ★ Supabaseから取得する関数をimport
 
 const Customers = () => {
+  // 顧客データを格納
   const [customers, setCustomers] = useState<Customer[]>([]);
+  // 並び順の基準（name または created_at）
   const [sortOrder, setSortOrder] = useState<"name" | "created_at">("name");
 
-  // 顧客一覧の取得
+  // Supabaseから顧客一覧の取得
   useEffect(() => {
     const fetchCustomers = async () => {
       try {
         const data = await customerRepository.getAll();
-        setCustomers(data); // ★ 取得データをセット
+        // 取得データをセット(状態更新)
+        setCustomers(data);
       } catch (err) {
         console.error("顧客データの取得に失敗しました", err);
       }
@@ -26,12 +29,16 @@ const Customers = () => {
     fetchCustomers();
   }, []);
 
-  const { searchQuery, setSearchQuery, filteredData } = useSearch(customers, "name");
+  // customers（顧客リスト）と検索対象（"name"）をuseSearchに送って検索する。
+  const { searchQuery, setSearchQuery, filteredData } = useSearch(customers);
+  // 検索された顧客データ（filteredData）と並び替える基準（sortOrder）をsortCustomersに送って並び替える。
   const sortedCustomers = sortCustomers(filteredData, sortOrder);
 
   return (
     <main className="flex-1 min-h-screen bg-gray-100 p-6 pt-20 sm:pl-64 overflow-y-auto">
+
       <SearchBox searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+
       <SortButtons sortOrder={sortOrder} setSortOrder={setSortOrder} />
 
       {sortedCustomers.length === 0 ? (
