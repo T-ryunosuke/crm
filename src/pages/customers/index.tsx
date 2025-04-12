@@ -6,7 +6,6 @@ import SortButtons from "@/components/customers/CustomerList/SortButtons";
 import CustomerList from "@/components/customers/CustomerList";
 import { customerRepository } from "@/modules/customers/customer.repository";
 import { Customer } from "@/modules/customers/customer.entity";
-// ★ Supabaseから取得する関数をimport
 
 const Customers = () => {
   // 顧客データを格納
