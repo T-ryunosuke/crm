@@ -2,11 +2,21 @@ import { Link, useLocation } from "react-router-dom";
 import UserItem from "./UserItem";
 import { useCurrentUserStore } from "@/modules/auth/current-user.state";
 import { useSignout } from "@/modules/auth/use-signout";
+import {
+  AlertDialog,
+  AlertDialogTrigger,
+  AlertDialogContent,
+  AlertDialogHeader,
+  AlertDialogFooter,
+  AlertDialogTitle,
+  AlertDialogDescription,
+  AlertDialogCancel,
+  AlertDialogAction,
+} from "@/components/ui/alert-dialog";
 
 const Sidebar = () => {
   const currentUserStore = useCurrentUserStore();
   const { signout } = useSignout();
-  // 現在のパスを取得
   const location = useLocation();
   const isActive = (path: string) => location.pathname === path;
 
@@ -36,12 +46,25 @@ const Sidebar = () => {
           </Link>
         </li>
         <li>
-          <button
-            onClick={signout}
-            className="w-full text-left block px-5 py-3 font-mono text-lg hover:bg-gray-700"
-          >
-            ログアウト
-          </button>
+          <AlertDialog>
+            <AlertDialogTrigger asChild>
+              <button className="w-full text-left block px-5 py-3 font-mono text-lg hover:bg-gray-700">
+                ログアウト
+              </button>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>ログアウトしますか？</AlertDialogTitle>
+                <AlertDialogDescription>
+                  一度ログアウトすると、再ログインが必要になります。
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>キャンセル</AlertDialogCancel>
+                <AlertDialogAction onClick={signout}>ログアウト</AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
         </li>
       </ul>
     </div>
