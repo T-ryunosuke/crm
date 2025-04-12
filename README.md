@@ -117,42 +117,62 @@ npm run dev
 ```
 src/
 ├── components/
-│   ├── dashboard/            # ダッシュボードのコンポーネント用
-│   │    ├── CustomerList.tsx # 顧客リスト表示コンポーネント
-│   │    ├── SearchBox.tsx    # 検索ボックスコンポーネント
-│   │    └── SortButtons.tsx  # 並び替えボタンコンポーネント
-│   ├── ui/                   # 汎用UIコンポーネント
+│   ├── common/
+│   │    └── LogoutButtonWithConfirm.tsx  # 確認ダイアログ付きログアウト
+│   ├── customers/
+│   │   └── CustomerList
+│   │       ├── index.tsx        # 顧客リスト表示
+│   │       ├── SearchBox.tsx    # 検索ボックス
+│   │       └── SortButtons.tsx  # 並び替えボタン
+│   ├── header/
+│   │   └── index.tsx   # ヘッダー
+│   ├── sidebar/
+│   │   ├── index.tsx         # サイドバー
+│   │   └── UserItem.tsx.tsx  # ログインユーザー情報表示
+│   ├── ui/
+│   │   ├── alert-dialog.tsx
 │   │   ├── alert.tsx
+│   │   ├── avatar.tsx
 │   │   ├── button.tsx
 │   │   ├── card.tsx
 │   │   ├── input.tsx
 │   │   └── navigation-menu.tsx
-│   ├── Header.tsx            # ヘッダーコンポーネント
-│   └── Sidebar.tsx           # サイドバーコンポーネント
-├── data/                     # データ用
-│   └── customers.ts          # 顧客データ用
-├── hooks/                    # カスタムHooks用
-│   └── useSearch.ts          # 検索のHooks用
-├── lib/                      # ユーティリティ関数用
-│   ├── sortCustomers.ts      # 並び替えのユーティリティ関数用
-│   └── utils.ts              # ユーティリティ関数用
-├── pages/                    # ページコンポーネント用
-│   ├── Dashboard.tsx         # ダッシュボードコンポーネント
-│   ├── Signup.tsx            # サインアップコンポーネント
-│   └── Signin.tsx            # サインインコンポーネント
-├── types/                    # 型定義用
+├── data/
+│   └── customers.ts    # 顧客データ用
+├── hooks/
+│   └── useSearch.ts    # 検索のHooks用
+├── lib/
+│   ├── sortCustomers.ts  # 並び替え関数用
+│   ├── supabase.ts       # supabase連携用
+│   └── utils.ts          # ユーティリティ関数用
+├── modules/
+│   ├── auth/
+│   │   ├── auth.repository.ts     # 認証のsupabase操作
+│   │   ├── current-user.state.ts  # ログインユーザーグローバル管理
+│   │   └── use-signout.ts         # ログアウト
+│   └── customers/
+│       ├── customer.entity.ts      # supabaseの顧客の型
+│       └── customer.repository.ts  # 顧客のsupabase操作
+├── pages/
+│   ├── auth/
+│   │   ├── Signin.tsx  # サインイン
+│   │   └── Signup.tsx  # サインアップ
+│   └── customers/
+│       ├── CreateCustomer.tsx  # 顧客登録
+│       └── index.tsx           # 顧客一覧
+├── types/
 │   └── customer.ts           # 顧客データの型定義用
-├── App.tsx                   # アプリケーションのルート
-├── index.css                 # グローバルなスタイル
-├── Layout.tsx                # 共通レイアウト
-├── main.tsx                  # エントリーポイント
-└── vite-env.d.ts             # Viteの環境設定用の型定義
+├── App.tsx             # アプリケーションのルート
+├── index.css           # グローバルなスタイル
+├── Layout.tsx          # 共通レイアウト
+├── main.tsx            # エントリーポイント
+└── vite-env.d.ts       # Viteの環境設定用の型定義
 ```
 
 ## 今後の改善点
 
 - 顧客詳細画面の実装
 - フィルタリング機能の拡張
-- 顧客データの登録・編集・削除機能
-- バックエンドとの連携（API実装）
+- 顧客データの~~登録~~・編集・削除機能
+- ~~バックエンドとの連携（API実装）~~
 - テストの追加

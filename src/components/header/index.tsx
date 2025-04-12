@@ -1,21 +1,8 @@
 import { Link } from "react-router-dom";
 import ReactLogo from "@/assets/react.svg";
-import { useSignout } from "@/modules/auth/use-signout";
-import {
-  AlertDialog,
-  AlertDialogTrigger,
-  AlertDialogContent,
-  AlertDialogHeader,
-  AlertDialogFooter,
-  AlertDialogTitle,
-  AlertDialogDescription,
-  AlertDialogCancel,
-  AlertDialogAction,
-} from "@/components/ui/alert-dialog";
+import LogoutButtonWithConfirm from "../common/LogoutButtonWithConfirm";
 
 const Header = () => {
-  const { signout } = useSignout();
-
   return (
     <div className="w-full h-16 bg-white shadow-md fixed top-0 flex items-center pl-3 sm:px-6 z-50">
       <div className="flex w-full justify-between">
@@ -27,28 +14,9 @@ const Header = () => {
 
         {/* スマホ用 */}
         <div className="flex sm:hidden items-center pr-6 space-x-4">
-          {/* ログアウト（モーダル付き） */}
-          <AlertDialog>
-            <AlertDialogTrigger asChild>
-              <button
-                className="px-2 py-1 text-sm text-gray-800 border border-gray-400 rounded hover:bg-gray-400"
-              >
-                ログアウト
-              </button>
-            </AlertDialogTrigger>
-            <AlertDialogContent>
-              <AlertDialogHeader>
-                <AlertDialogTitle>ログアウトしますか？</AlertDialogTitle>
-                <AlertDialogDescription>
-                  ログアウトすると、再ログインが必要になります。
-                </AlertDialogDescription>
-              </AlertDialogHeader>
-              <AlertDialogFooter>
-                <AlertDialogCancel>キャンセル</AlertDialogCancel>
-                <AlertDialogAction onClick={signout}>ログアウト</AlertDialogAction>
-              </AlertDialogFooter>
-            </AlertDialogContent>
-          </AlertDialog>
+
+          {/* ログアウト */}
+          <LogoutButtonWithConfirm className="px-2 py-1 text-sm text-gray-800 border border-gray-400 rounded hover:bg-gray-400" />
 
           {/* 顧客登録ボタン */}
           <Link to="/create">
