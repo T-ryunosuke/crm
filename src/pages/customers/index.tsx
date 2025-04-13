@@ -34,8 +34,7 @@ const Customers = () => {
   const sortedCustomers = sortCustomers(filteredData, sortOrder);
 
   return (
-    <main className="flex-1 min-h-screen bg-gray-100 p-6 pt-20 sm:pl-64 overflow-y-auto">
-
+    <>
       <SearchBox searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
 
       <SortButtons sortOrder={sortOrder} setSortOrder={setSortOrder} />
@@ -45,7 +44,7 @@ const Customers = () => {
       ) : (
         <CustomerList customers={sortedCustomers} />
       )}
-    </main>
+    </>
   );
 };
 
