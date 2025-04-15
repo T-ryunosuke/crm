@@ -16,6 +16,11 @@ const Signin = () => {
     currentUserStore.set(user);
   };
 
+  const guestSignin = async () => {
+    const user = await authRepository.guestSignin();  // ゲストログイン処理
+    currentUserStore.set(user);
+  };
+
   if (currentUserStore.currentUser != null) return <Navigate replace to="/" />;
 
   return (
@@ -44,6 +49,11 @@ const Signin = () => {
               ログイン
             </Button>
           </div>
+
+          <Button variant="outline" className="w-full mt-4" onClick={guestSignin}>
+            ゲストログイン
+          </Button>
+
           <div className="mt-4 text-center text-sm">
             登録は
             <Link className="underline" to={'/signup'}>

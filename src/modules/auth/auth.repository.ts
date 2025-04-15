@@ -26,6 +26,20 @@ export const authRepository = {
     };
   },
 
+  async guestSignin() {
+    const guestEmail = "guests@guests.com";
+    const guestPassword = "guests";
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email: guestEmail,
+      password: guestPassword,
+    });
+    if (error != null || data.user == null) throw new Error(error?.message);
+    return {
+      ...data.user,
+      userName: data.user.user_metadata.name,
+    };
+  },
+
   async getCurrentUser() {
     const { data, error } = await supabase.auth.getSession();
     if (error != null) throw new Error(error.message);
