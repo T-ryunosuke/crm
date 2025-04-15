@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Navigate } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -49,6 +49,13 @@ const Signup = () => {
             <Button className="w-full" onClick={ signup } disabled={name === "" || email === '' || password === ''}>
               登録
             </Button>
+          </div>
+          <div className="mt-4 text-center text-sm">
+            ログインは
+            <Link className="underline" to={'/signin'}>
+              こちら
+            </Link>
+            から
           </div>
         </CardContent>
       </Card>
