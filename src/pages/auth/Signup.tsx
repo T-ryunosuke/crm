@@ -5,17 +5,24 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { authRepository } from "@/modules/auth/auth.repository";
 import { useCurrentUserStore } from "@/modules/auth/current-user.state";
+import { Turnstile } from "@marsidev/react-turnstile"; // Turnstileをインポート
 
 const Signup = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [captchaToken, setCaptchaToken] = useState("");
   const currentUserStore = useCurrentUserStore();
 
   const signup = async () => {
-    const user = await authRepository.signup(name, email, password);
+    if (!captchaToken) {
+      alert("Captcha認証を完了してください");
+      return;
+    }
+
+    const user = await authRepository.signup(name, email, password, captchaToken);
     currentUserStore.set(user);
-  }
+  };
 
   if (currentUserStore.currentUser != null) return <Navigate replace to="/" />;
 
@@ -46,7 +53,16 @@ const Signup = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
-            <Button className="w-full" onClick={ signup } disabled={name === "" || email === '' || password === ''}>
+            <Turnstile
+              siteKey={import.meta.env.VITE_TURNSTILE_SITE_KEY}
+              onSuccess={(token) => setCaptchaToken(token)}
+              className="w-full mt-4 rounded"
+            />
+            <Button
+              className="w-full mt-4"
+              onClick={signup}
+              disabled={name === "" || email === "" || password === "" || !captchaToken} // 入力値とCaptchaをチェック
+            >
               登録
             </Button>
           </div>
@@ -61,6 +77,6 @@ const Signup = () => {
       </Card>
     </div>
   );
-}
+};
 
 export default Signup;

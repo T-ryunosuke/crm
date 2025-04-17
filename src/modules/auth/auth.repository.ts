@@ -1,11 +1,11 @@
 import { supabase } from "@/lib/supabase";
 
 export const authRepository = {
-  async signup(name: string, email: string, password: string) {
+  async signup(name: string, email: string, password: string, captchaToken: string) {
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
-      options: { data: { name } },
+      options: { captchaToken, data: { name } },
     });
     if (error != null || data.user == null) throw new Error(error?.message);
     return {
@@ -14,10 +14,13 @@ export const authRepository = {
     };
   },
 
-  async signin(email: string, password: string) {
+  async signin(email: string, password: string, captchaToken: string) {
     const { data, error } = await supabase.auth.signInWithPassword({
       email,
-      password
+      password,
+      options: {
+        captchaToken
+      }
     });
     if (error != null || data.user == null) throw new Error(error?.message);
     return {
@@ -26,13 +29,9 @@ export const authRepository = {
     };
   },
 
+
   async guestSignin() {
-    const guestEmail = "guests@guests.com";
-    const guestPassword = "guests";
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email: guestEmail,
-      password: guestPassword,
-    });
+    const { data, error } = await supabase.auth.signInAnonymously();
     if (error != null || data.user == null) throw new Error(error?.message);
     return {
       ...data.user,

@@ -5,19 +5,25 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { authRepository } from "@/modules/auth/auth.repository";
 import { useCurrentUserStore } from "@/modules/auth/current-user.state";
+import { Turnstile } from "@marsidev/react-turnstile";
 
 const Signin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [captchaToken, setCaptchaToken] = useState("");
   const currentUserStore = useCurrentUserStore();
 
+
   const signin = async () => {
-    const user = await authRepository.signin(email, password);
+    if (!captchaToken) return alert("認証を完了してください");
+
+    const user = await authRepository.signin(email, password, captchaToken);
     currentUserStore.set(user);
   };
 
   const guestSignin = async () => {
-    const user = await authRepository.guestSignin();  // ゲストログイン処理
+    // ゲストログイン処理
+    const user = await authRepository.guestSignin();
     currentUserStore.set(user);
   };
 
@@ -45,6 +51,14 @@ const Signin = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
+
+            {/* Turnstile をここに挿入 */}
+            <Turnstile
+              siteKey={import.meta.env.VITE_TURNSTILE_SITE_KEY}
+              onSuccess={(token) => setCaptchaToken(token)}
+              className="w-full mt-2 rounded"
+            />
+
             <Button className="w-full" onClick={ signin } disabled={email === '' || password === ''}>
               ログイン
             </Button>
