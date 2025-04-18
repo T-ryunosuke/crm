@@ -29,9 +29,12 @@ export const authRepository = {
     };
   },
 
-
-  async guestSignin() {
-    const { data, error } = await supabase.auth.signInAnonymously();
+  async guestSignin(captchaToken: string) {
+    const { data, error } = await supabase.auth.signInAnonymously({
+      options: {
+        captchaToken
+      }
+    });
     if (error != null || data.user == null) throw new Error(error?.message);
     return {
       ...data.user,
