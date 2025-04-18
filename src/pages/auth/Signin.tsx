@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { authRepository } from "@/modules/auth/auth.repository";
 import { useCurrentUserStore } from "@/modules/auth/current-user.state";
 import { Turnstile } from "@marsidev/react-turnstile";
+import { isProd } from "@/lib/env";
 
 const Signin = () => {
   const [email, setEmail] = useState("");
@@ -15,14 +16,15 @@ const Signin = () => {
 
 
   const signin = async () => {
-    if (!captchaToken) return alert("認証を完了してください");
+    // 本番環境かつcaptchaTokenがない時
+    if (isProd && !captchaToken) return alert("Cloudflare認証ができていません");
 
     const user = await authRepository.signin(email, password, captchaToken);
     currentUserStore.set(user);
   };
 
   const guestSignin = async () => {
-    if (!captchaToken) return alert("認証を完了してください");
+    if (isProd && !captchaToken) return alert("認証を完了してください");
 
     const user = await authRepository.guestSignin(captchaToken);
     currentUserStore.set(user);
@@ -54,11 +56,13 @@ const Signin = () => {
             />
 
             {/* Turnstile をここに挿入 */}
-            <Turnstile
-              siteKey={import.meta.env.VITE_TURNSTILE_SITE_KEY}
-              onSuccess={(token) => setCaptchaToken(token)}
-              className="w-full mt-2 rounded"
-            />
+            {isProd && (
+              <Turnstile
+                siteKey={import.meta.env.VITE_TURNSTILE_SITE_KEY}
+                onSuccess={(token) => setCaptchaToken(token)}
+                className="w-full mt-2 rounded"
+              />
+            )}
 
             <Button className="w-full" onClick={ signin } disabled={email === '' || password === ''}>
               ログイン
