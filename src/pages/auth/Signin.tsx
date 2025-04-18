@@ -22,8 +22,9 @@ const Signin = () => {
   };
 
   const guestSignin = async () => {
-    // ゲストログイン処理
-    const user = await authRepository.guestSignin();
+    if (!captchaToken) return alert("認証を完了してください");
+
+    const user = await authRepository.guestSignin(captchaToken);
     currentUserStore.set(user);
   };
 
