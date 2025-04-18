@@ -1,11 +1,15 @@
 import { supabase } from "@/lib/supabase";
+import { getCaptchaToken } from "@/lib/env";
 
 export const authRepository = {
   async signup(name: string, email: string, password: string, captchaToken: string) {
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
-      options: { captchaToken, data: { name } },
+      options: {
+        captchaToken: getCaptchaToken(captchaToken),
+        data: { name }
+      },
     });
     if (error != null || data.user == null) throw new Error(error?.message);
     return {
@@ -19,7 +23,7 @@ export const authRepository = {
       email,
       password,
       options: {
-        captchaToken
+        captchaToken: getCaptchaToken(captchaToken),
       }
     });
     if (error != null || data.user == null) throw new Error(error?.message);
@@ -32,7 +36,7 @@ export const authRepository = {
   async guestSignin(captchaToken: string) {
     const { data, error } = await supabase.auth.signInAnonymously({
       options: {
-        captchaToken
+        captchaToken: getCaptchaToken(captchaToken),
       }
     });
     if (error != null || data.user == null) throw new Error(error?.message);

@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { authRepository } from "@/modules/auth/auth.repository";
 import { useCurrentUserStore } from "@/modules/auth/current-user.state";
 import { Turnstile } from "@marsidev/react-turnstile"; // Turnstileをインポート
+import { isProd } from "@/lib/env";
 
 const Signup = () => {
   const [name, setName] = useState("");
@@ -53,11 +54,15 @@ const Signup = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
-            <Turnstile
-              siteKey={import.meta.env.VITE_TURNSTILE_SITE_KEY}
-              onSuccess={(token) => setCaptchaToken(token)}
-              className="w-full mt-4 rounded"
-            />
+
+            {isProd && (
+              <Turnstile
+                siteKey={import.meta.env.VITE_TURNSTILE_SITE_KEY}
+                onSuccess={(token) => setCaptchaToken(token)}
+                className="w-full mt-4 rounded"
+              />
+            )}
+
             <Button
               className="w-full mt-4"
               onClick={signup}
