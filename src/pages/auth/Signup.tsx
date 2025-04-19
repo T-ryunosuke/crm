@@ -63,10 +63,11 @@ const Signup = () => {
               />
             )}
 
+            {/* captchaTokenも必要としているため本番環境でのみ登録可能 */}
             <Button
               className="w-full mt-4"
               onClick={signup}
-              disabled={name === "" || email === "" || password === "" || !captchaToken} // 入力値とCaptchaをチェック
+              disabled={name === "" || email === "" || password === "" || !captchaToken}
             >
               登録
             </Button>
