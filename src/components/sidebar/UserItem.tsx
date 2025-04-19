@@ -8,6 +8,8 @@ type Props = {
 };
 
 const UserItem: FC<Props> = ({ user }) => {
+  const name = user.user_metadata.name ?? "ゲストユーザー";
+
   return (
     <Card className="bg-gray-700 border-none text-white mx-2 mb-4">
       <CardContent className="px-3 pt-1 pb-2.5 flex items-center gap-1">
@@ -21,12 +23,12 @@ const UserItem: FC<Props> = ({ user }) => {
         </Avatar>
 
         {/* 名前とメール */}
-        <div>
+        <div className="pt-0.5">
           <div className="text-md tracking-wider">
-            {user.user_metadata.name}
+            {name}
           </div>
           <div className="text-xs font-thin text-gray-300">
-            {user.email}
+            {user.email || "no_email_address"}
           </div>
         </div>
       </CardContent>
